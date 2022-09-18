@@ -19,4 +19,10 @@ def create_lat_lon(new_df):
     new_df.set_index(new_df.columns[0],inplace=True)
     new_df.drop(columns=['Coords'],inplace=True)
     return new_df
-#%%
+def get_block_address(postal):
+    req = requests.get('https://developers.onemap.sg/commonapi/search?searchVal='+postal+'&returnGeom=Y&getAddrDetails=Y&pageNum=1')
+    resultsdict = eval(req.text)
+    if len(resultsdict['results'])>0:
+        return resultsdict['results'][0]['BLK_NO'], resultsdict['results'][0]['ROAD_NAME']
+    else:
+        print("No such address")
