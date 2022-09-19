@@ -23,13 +23,10 @@ Learn more models and understand the capabilities of the more commonly used ones
 
 As it is my first public model, I am still currently still learning the PEP8 style.
 
-## Future implementations
+## Heroku deployment
 
-Apply deep learning model.
+Try it out [here!](https://resale-calculator.herokuapp.com/)
 
-Deploy on website or app as experimentation.
-
-Further improve current model with other features or improving models.
-
+## Support me
 
 Please do leave feedback and criticism. 
