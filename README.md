@@ -25,7 +25,8 @@ As it is my first public model, I am still currently still learning the PEP8 sty
 
 ## Heroku deployment
 
-Try it out [here!](https://resale-calculator.herokuapp.com/)
+Try it out [here!](https://resale-calculator.herokuapp.com/) 
+Might take awhile to load if it's inactive
 
 ## Support me
 
