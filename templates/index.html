@@ -3,7 +3,7 @@
 <!--From https://codepen.io/frytyler/pen/EGdtg-->
 <head>
     <meta charset="UTF-8">
-    <title>ML Deployment using Heroku</title>
+    <title>Resale price estimator</title>
     <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
@@ -14,11 +14,11 @@
 <div class="prediction">
     <h1>How much is my house worth?</h1>
     <form action="{{ url_for('predict')}}"method="post">
-        <label for="Postal">Postal</label>
+        <label for="Postal">Postal*</label>
         <input type="number" id="Postal" name="Postal" required="required" minlength="6">
         <br>
         <br>
-        <label for="flat_cat">No of rooms</label>
+        <label for="flat_cat">No of rooms*</label>
         <select id="flat_cat" name="flat_cat" required="required">
             <option value="1">1 Room</option>
             <option value="2">2 Room</option>
@@ -30,7 +30,7 @@
         </select>
         <br>
         <br>
-        <label for="floor_area_sqm">Floor area</label>
+        <label for="floor_area_sqm">Floor area (SQM) </label>
         <input type="number" id="floor_area_sqm" name="floor_area_sqm" min="0" max="500">
         <br>
         <br>
@@ -38,9 +38,11 @@
         <input type="number" id="Lease" name="Lease" min="1950" max="2050">
         <br>
         <br>
-        <label for="storey_range">Storey level</label>
+        <label for="storey_range">Storey level*</label>
         <input type="number" id="storey_range" name="storey_range" required="required" min="1" max="100">
         <br>
+        <h3>* Required fields. If lease is empty, the building completion year will be used.
+            If area is empty, average of room sizes will be used.</h3>
         <br>
         <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
     </form>
