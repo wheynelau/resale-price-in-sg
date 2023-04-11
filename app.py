@@ -1,6 +1,6 @@
 from flask import Flask, request, url_for, redirect, render_template, jsonify
 from xgboost import XGBRegressor
-from common_func import *
+from src.common_func import *
 from datetime import datetime
 import numpy as np
 
