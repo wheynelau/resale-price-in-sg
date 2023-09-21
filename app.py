@@ -1,8 +1,8 @@
 from flask import Flask, request, url_for, redirect, render_template, jsonify
 from xgboost import XGBRegressor
-from src.common_func import *
 from datetime import datetime
 import numpy as np
+from src.utils.common_func import info_parser
 
 model = XGBRegressor()
 hdb_details = pd.read_csv('resale-flat-prices/hdb-property-information.csv',
