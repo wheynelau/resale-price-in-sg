@@ -19,7 +19,7 @@ st.markdown(
     ### The application is divided into 3 parts:
     - Basic plots
     - Map plot of areas
-    - Search
-    - Prediction
+    - Search nearby 
+    - Prediction (Coming soon!)
     """ 
     )
