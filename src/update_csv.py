@@ -1,7 +1,7 @@
 import sys
 import pandas as pd
 import numpy as np
-from src.preprocessing import Preprocessor
+from utils.preprocessing import Preprocessor
 import requests
 import time
 
@@ -80,6 +80,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
     # 3. Convert the new data to a DataFrame
+    print("New data fetched successfully, num differences = {}".format(len(sample)))
     new_data = pd.DataFrame(sample)
     new_data['_id'] = new_data['_id']-1
     new_data.set_index('_id', inplace=True)
