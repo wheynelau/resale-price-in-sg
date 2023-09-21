@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import difflib as dl
 from datetime import datetime
+from ast import literal_eval
 
 # function gets the lat and lon details from the given address
 # it's a free API with a rate limit of 250 per min
@@ -11,12 +12,16 @@ from datetime import datetime
 def getcoordinates(address):
     req = requests.get(
         'https://developers.onemap.sg/commonapi/search?searchVal=' + address + '&returnGeom=Y&getAddrDetails=Y&pageNum=1')
-    resultsdict = eval(req.text)
+    resultsdict = literal_eval(req.text)
     if len(resultsdict['results']) > 0:
         return [resultsdict['results'][0]['LATITUDE'], resultsdict['results'][0]['LONGITUDE']]
     else:
         pass
 
+def find_nearest(df, lat,long):
+    lat = float(lat)
+    long = float(long)
+    df['distance'] = np.linalg.norm(df[['latitude','longitude']]- (lat,long), axis=1) * 111
 
 def create_lat_lon(new_df):
     new_df = new_df.join(pd.DataFrame(new_df['Coords'].values.tolist(), columns=['LAT', 'LONG']), on=new_df.index)
@@ -26,8 +31,8 @@ def create_lat_lon(new_df):
 
 
 def load_mrt_malls():
-    mrt = pd.read_csv('amenities/mrt.csv')
-    malls = pd.read_csv('amenities/malls.csv')
+    mrt = pd.read_csv('assets/amenities/mrt.csv')
+    malls = pd.read_csv('assets/amenities/malls.csv')
     convert_mrt_array = mrt[['LAT', 'LONG']].to_numpy()
     convert_malls_array = malls[['LAT', 'LONG']].to_numpy()
     return convert_mrt_array, convert_malls_array
