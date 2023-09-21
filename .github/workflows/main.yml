@@ -1,0 +1,36 @@
+name: Update CSV File
+
+on:
+  # Run this workflow every day at 2 AM
+  schedule:
+    - cron: '0 2 * * *'
+  # You can also run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11' 
+
+    - name: Install dependencies
+      run: |
+        python -m pip install -r workflow_requirements.txt
+
+    - name: Run the script
+      run: python ./src/update_csv.py
+
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        git commit -m "Update CSV file" || echo "No changes to commit"
+        git push
