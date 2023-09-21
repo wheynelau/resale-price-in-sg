@@ -93,4 +93,4 @@ if __name__ == "__main__":
 
     # 6. Save the merged data
 
-    # appended.to_csv(CSV_PATH)
+    appended.to_csv(CSV_PATH)
