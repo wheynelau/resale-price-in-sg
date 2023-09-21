@@ -4,10 +4,6 @@ from src.common_func import *
 from datetime import datetime
 import numpy as np
 
-
-
-
-
 model = XGBRegressor()
 hdb_details = pd.read_csv('resale-flat-prices/hdb-property-information.csv',
                           usecols=['blk_no', 'street', 'year_completed'])
