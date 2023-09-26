@@ -18,10 +18,10 @@ def getcoordinates(address):
     else:
         pass
 
-def find_nearest(df, lat,long):
+def find_nearest(df, lat,long, col_name = 'distance', conversion = 111):
     lat = float(lat)
     long = float(long)
-    df['distance'] = np.linalg.norm(df[['latitude','longitude']]- (lat,long), axis=1) * 111
+    df[col_name] = np.linalg.norm(df[['latitude','longitude']]- (lat,long), axis=1) * conversion
 
 def create_lat_lon(new_df):
     new_df = new_df.join(pd.DataFrame(new_df['Coords'].values.tolist(), columns=['LAT', 'LONG']), on=new_df.index)
