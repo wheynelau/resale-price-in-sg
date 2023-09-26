@@ -51,6 +51,9 @@ jobs:
       run: python ./src/train.py
 
     - name: Commit and push changes for model
+      env:
+        CHANGES_DETECTED: ${{ env.CHANGES_DETECTED }}
+      if: env.CHANGES_DETECTED == '1'
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
