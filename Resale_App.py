@@ -34,7 +34,7 @@ with st.expander("Additional details on data", expanded=False):
     Reason being that most users would be interested in the latest data. The newer data allows for a more accurate prediction with a smaller dataset.
     It is debatable whether the older data should be included for more variance, but this is quite experimental. 
 
-    
+
     """
     )
 st.markdown(
@@ -51,6 +51,7 @@ st.markdown(
 
 with st.expander("About me", expanded=False):
 
+    st.markdown("If there are any bugs or suggestions, please contact me via LinkedIn or GitHub.")
 
     st.markdown('<a href="https://www.linkedin.com/in/wheyne-lau"><img src="https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg" width="30" height="30" alt="LinkedIn Logo"></a> Click [here](https://www.linkedin.com/in/wheyne-lau/) to view my LinkedIn Profile.', unsafe_allow_html=True)
 
