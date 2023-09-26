@@ -88,7 +88,7 @@ class Preprocessor:
     def get_lat_lon(self,old_df:pd.DataFrame, new_df):
         dict_lat_lon = old_df[['address','latitude','longitude']].drop_duplicates(subset=['address']).set_index('address').to_dict()
         for idx,row in new_df.iterrows():
-            value = dict_lat_lon['latitude'][row['address']]
+            value = dict_lat_lon['latitude'].get(row['address'], np.nan)
             if isinstance(value, (float, np.float64, np.float32)) and np.isnan(value):
                 lat, lon = self.getcoordinates(row['address'])
                 new_df.loc[idx,['latitude', 'longitude']] = lat,lon
