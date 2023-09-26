@@ -89,5 +89,6 @@ if __name__ == "__main__":
     df = pd.read_csv(CSV_PATH)
 
     if len(mrt_stations) > len(df):
+        print(f"Updating MRT stations from {len(df)} to {len(mrt_stations)}")
         df = pd.DataFrame(mrt_stations)
         df.to_csv(CSV_PATH, index=False)
