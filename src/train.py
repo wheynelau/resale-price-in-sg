@@ -192,7 +192,7 @@ if __name__ == "__main__":
         training = xgb_model.fit(X_train, y_train, eval_set=[(X_test, y_test)], 
                                  verbose=True,)
 
-        score = training.best_score
+        score = -training.best_score
         print(score)
         try:
             assert score > THRESHOLD, "Score is not above threshold"
