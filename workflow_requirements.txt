@@ -2,3 +2,5 @@ pandas==2.0.3
 numpy==1.25.2
 requests
 beautifulsoup4
+scikit-learn
+xgboost

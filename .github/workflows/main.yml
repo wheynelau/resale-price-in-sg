@@ -1,7 +1,7 @@
 name: Update CSV File
 
 on:
-  # Run this workflow every day at 2 AM
+  
   schedule:
     - cron: '0 0 * * 0'
   # You can also run this workflow manually from the Actions tab
