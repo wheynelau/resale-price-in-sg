@@ -33,7 +33,7 @@ def create_lat_lon(new_df):
 def load_mrt_malls():
     mrt = pd.read_csv('assets/amenities/mrt.csv')
     malls = pd.read_csv('assets/amenities/malls.csv')
-    convert_mrt_array = mrt[['LAT', 'LONG']].to_numpy()
+    convert_mrt_array = mrt[['latitude', 'longitude']].to_numpy()
     convert_malls_array = malls[['LAT', 'LONG']].to_numpy()
     return convert_mrt_array, convert_malls_array
 
