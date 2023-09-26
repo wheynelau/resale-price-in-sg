@@ -24,7 +24,7 @@ jobs:
       run: |
         python -m pip install -r workflow_requirements.txt
 
-    - name: Run the script
+    - name: Update resale dataset
       run: python ./src/update_csv.py
 
     - name: Commit and push changes
@@ -32,5 +32,14 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add -A
-        git commit -m "actions: update CSV file" || echo "no changes to commit"
+        git commit -m "actions: update HDB database file" || echo "no changes to commit"
+        git push
+
+    - name: Update mrts
+      run: python ./src/update_mrts.py
+
+    - name: Commit and push changes
+      run: |
+        git add -A 
+        git commit -m "actions: update MRT database file" || echo "no changes to commit"
         git push
