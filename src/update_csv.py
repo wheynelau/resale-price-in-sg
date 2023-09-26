@@ -1,9 +1,9 @@
 import sys
-import pandas as pd
-import numpy as np
-from utils.preprocessing import Preprocessor
-import requests
 import time
+import pandas as pd
+import requests
+from utils.preprocessing import Preprocessor
+
 
 class HDBDataset:
 
@@ -30,13 +30,12 @@ class HDBDataset:
         if params.get('resource_id', None) is None:
             params['resource_id'] = self._resource_id
         response = requests.get("https://data.gov.sg/api/action/datastore_search",
-                                 params=params)
+                                 params=params, timeout=5)
 
         # Check if the request was successful
         if response.status_code == 200:
             return response.json()['result']['records']
-        else:
-            response.raise_for_status()
+        response.raise_for_status()
 
     def get_first_dataset(self):
         """
@@ -50,14 +49,14 @@ class HDBDataset:
               timeout=5)
         resource_id = None
         # sanity check
-        for dataset in metadata.json()['data']['collectionMetadata']['childDatasets']:
-            resp = self.fetch_json_response(resource_id=dataset, limit=1)
+        for child_dataset in metadata.json()['data']['collectionMetadata']['childDatasets']:
+            resp = self.fetch_json_response(resource_id=child_dataset, limit=1)
             if resp[0]['month'] == '2017-01':
-                resource_id = dataset
+                resource_id = child_dataset
                 break
             time.sleep(1)
         return resource_id
-    
+
 if __name__ == "__main__":
     dataset = HDBDataset()
     preprocessor = Preprocessor()
@@ -80,7 +79,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
     # 3. Convert the new data to a DataFrame
-    print("New data fetched successfully, num differences = {}".format(len(sample)))
+    print(f"New data fetched successfully, num differences = {len(sample)}")
     new_data = pd.DataFrame(sample)
     new_data['_id'] = new_data['_id']-1
     new_data.set_index('_id', inplace=True)
