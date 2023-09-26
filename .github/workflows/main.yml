@@ -27,7 +27,7 @@ jobs:
     - name: Update resale dataset
       run: python ./src/update_csv.py
 
-    - name: Commit and push changes
+    - name: Commit and push changes for database
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
@@ -38,8 +38,19 @@ jobs:
     - name: Update mrts
       run: python ./src/update_mrts.py
 
-    - name: Commit and push changes
+    - name: Commit and push changes for mrt
       run: |
         git add -A 
         git commit -m "actions: update MRT database file" || echo "no changes to commit"
+        git push
+
+    - name: Train model
+      run: python ./src/train.py
+
+    - name: Commit and push changes for model
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        git commit -m "actions: update model" || echo "no changes to commit"
         git push
