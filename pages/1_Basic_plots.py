@@ -5,12 +5,19 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-st.title("Visualising resale prices")
+st.title("Resale prices at a glance")
+
 @st.cache_data
 def load_csv():
     return pd.read_csv("assets/data/geo_coords_2017.csv", index_col=0)
 if "data" not in st.session_state:
     st.session_state.data = load_csv()
+
+with st.expander("About this page"):
+    st.markdown("This page shows some basic plots of the resale prices in Singapore.\n "
+                "The plot will automatically update with there is new data from data.gov.sg"
+    )
+
 
 fig, axarr = plt.subplots(2, 2, figsize=(10,10))
 
