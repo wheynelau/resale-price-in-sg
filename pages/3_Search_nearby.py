@@ -1,9 +1,10 @@
 import streamlit as st
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-import seaborn as sns
 from src.utils.common_func import getcoordinates, find_nearest
+
 
 st.title("Search nearby houses that were sold")
 @st.cache_data
@@ -42,11 +43,13 @@ if not results.empty:
     filtered_results = filtered_results[filtered_results['flat_type'] ==flat_type]
     filtered_results['month'] = filtered_results['year'].astype(str) + '-' + filtered_results['month'].astype(str)
     filtered_results['lease_commence_date'] = filtered_results['lease_commence_date'].astype(str)
+    filtered_results['price_per_sqm'] = filtered_results['resale_price'] / filtered_results['floor_area_sqm']
+
     st.markdown("""### Results
                 The columns can be sorted by clicking on the column name.
                 """)
     st.dataframe(filtered_results[['month','lease_commence_date','remaining_lease_year',
-                               'storey_range','floor_area_sqm','resale_price','address',
+                               'storey_range','floor_area_sqm','price_per_sqm','resale_price','address',
                                'distance'
                                ]]
                                .head(100), hide_index=True)
