@@ -1,12 +1,27 @@
 import streamlit as st
+import os
+from datetime import datetime
+import pandas as pd
 
 st.set_page_config(
     page_title="Resale Price",
     page_icon="🏠",
     layout="wide",
 )
+@st.cache_data
+def load_csv():
+    return pd.read_csv("assets/data/geo_coords_2017.csv", index_col=0)
+if "data" not in st.session_state:
+    st.session_state.data = load_csv()
 
 st.write("# Welcome to HDB Resale app! (Beta)")
+timestamp = os.path.getmtime("assets/data/geo_coords_2017.csv")
+
+mod_date = datetime.fromtimestamp(timestamp).strftime("%d %m %Y %H:%M:%S")
+st.markdown(f"_Data last updated: {mod_date}_", 
+            help = "The date here is not the date of the latest update from data.gov.sg, "
+            "it is the date of the latest update to the csv file in this app.\n"
+            "It is also not the latest transaction")
 
 st.sidebar.success("Select a demo above.")
 
