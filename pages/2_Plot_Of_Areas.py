@@ -4,11 +4,14 @@ import pydeck as pdk
 
 
 st.title("Resale prices on a map")
+
 @st.cache_data
 def load_csv():
     return pd.read_csv("assets/data/geo_coords_2017.csv", index_col=0)
 if "data" not in st.session_state:
     st.session_state.data = load_csv()
+
+st.markdown("This might not look great as it is just an experiment.")
 
 @st.cache_resource(ttl=60*60*24)
 def load_pdk():
