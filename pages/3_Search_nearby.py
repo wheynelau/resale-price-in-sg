@@ -7,6 +7,7 @@ from src.utils.common_func import getcoordinates, find_nearest
 
 
 st.title("Search nearby houses that were sold")
+
 @st.cache_data
 def load_csv():
     return pd.read_csv("assets/data/geo_coords_2017.csv", index_col=0)
