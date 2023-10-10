@@ -24,7 +24,7 @@ address = st.text_input(
 if address:
     lat, lon = getcoordinates(address)
     find_nearest(st.session_state.data, lat, lon)
-    results = st.session_state.data.query("distance <= 1").sort_index(ascending=False)
+    results = st.session_state.data.query("distance <= 1")
 
 else:
     results = st.session_state.data
@@ -81,7 +81,7 @@ if not results.empty:
     filtered_results["price_per_sqm"] = (
         filtered_results["resale_price"] / filtered_results["floor_area_sqm"]
     )
-
+    filtered_results.sort_index(ascending=False, inplace=True)
     st.markdown(
         "### Results\n"
         "The columns can be sorted by clicking on the column name. "
