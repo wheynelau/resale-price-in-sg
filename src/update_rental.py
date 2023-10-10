@@ -69,7 +69,6 @@ if __name__ == "__main__":
     # 2a. Check if the new data is empty
 
     if len(sample) == 0:
-
         print("No new data to update")
         sys.exit(0)
 

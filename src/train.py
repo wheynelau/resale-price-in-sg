@@ -11,10 +11,11 @@ import xgboost as xgb
 THRESHOLD = 0.9
 
 logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s [%(filename)s:%(lineno)d] - %(message)s'
+    level=logging.INFO, format="%(asctime)s [%(filename)s:%(lineno)d] - %(message)s"
 )
 logger = logging.getLogger(__name__)
+
+
 class PredictProcessor:
     RADIUS_KM = 5
     CONVERSION = 111.1
@@ -171,12 +172,12 @@ if __name__ == "__main__":
             Args:
             predt (np.ndarray): The predicted values.
             dtrain (xgb.DMatrix): The training data.
-            
+
             Returns:
             float: The negative R-squared score.
             """
             return -r2_score(predt, dtrain)
-        
+
         # no hyperparameter tuning is done as this will be done on github actions
         xgb_model = xgb.XGBRegressor(
             objective="reg:squarederror",
@@ -189,8 +190,12 @@ if __name__ == "__main__":
             eval_metric=custom_r2,
         )
 
-        training = xgb_model.fit(X_train, y_train, eval_set=[(X_test, y_test)], 
-                                 verbose=True,)
+        training = xgb_model.fit(
+            X_train,
+            y_train,
+            eval_set=[(X_test, y_test)],
+            verbose=True,
+        )
 
         score = -training.best_score
         print(score)
