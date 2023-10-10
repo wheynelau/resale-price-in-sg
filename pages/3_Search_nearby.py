@@ -27,7 +27,7 @@ if address:
     results = st.session_state.data.query("distance <= 1").sort_index(ascending=False)
 
 else:
-    results = pd.DataFrame()
+    results = st.session_state.data.tail(100)
 
 if not results.empty:
     flat_type = st.selectbox(
@@ -46,18 +46,24 @@ if not results.empty:
             (min(results["lease_commence_date"]), max(results["lease_commence_date"])),
             help="Select the range of lease commencement date",
         )
-
         distance = st.slider(
             "Radius in KM",
             0.0,
             1.0,
             value=0.5,
             step=0.05,
-            help="This is just an estimate. 0 distance should return your exact block",
+            help=(
+                "This is just an estimate. 0 distance should return your exact block. "
+                "Doesn't work if address is not entered"
+            ),
+            disabled=not address,
         )
 
     # Applying filters
-    filtered_results = results[results["distance"] <= distance]
+    if address:
+        filtered_results = results[results["distance"] <= distance]
+    else:
+        filtered_results = results
     filtered_results = filtered_results[
         (filtered_results["lease_commence_date"] >= lease_range[0])
         & (filtered_results["lease_commence_date"] <= lease_range[1])
@@ -81,36 +87,55 @@ if not results.empty:
         "The columns can be sorted by clicking on the column name. "
         "Note that only the first 100 results are shown."
     )
-    st.dataframe(
-        filtered_results[
-            [
-                "month",
-                "lease_commence_date",
-                "remaining_lease_year",
-                "flat_type",
-                "storey_range",
-                "floor_area_sqm",
-                "price_per_sqm",
-                "resale_price",
-                "address",
-                "distance",
-            ]
-        ].head(100),
-        hide_index=True,
-        column_config={
-            "price_per_sqm": st.column_config.NumberColumn(
-                "Price per SQM ($)", width="small", format="$ %.2f"
-            ),
-            "resale_price": st.column_config.NumberColumn(
-                "Resale Price ($)", format="$ %d"
-            ),
-            "distance": st.column_config.NumberColumn("Distance (KM)", format="%.2f"),
-            "remaining_lease_year": st.column_config.NumberColumn(
-                "Remaining Lease (Years)", format="%d"
-            ),
-            "floor_area_sqm": st.column_config.NumberColumn(
-                "Floor Area (SQM)", format="%d"
-            ),
-            "month": st.column_config.DatetimeColumn("Month", format="MMM-YYYY"),
-        },
-    )
+    col_config = {
+        "price_per_sqm": st.column_config.NumberColumn(
+            "Price per SQM ($)", width="small", format="$ %.2f"
+        ),
+        "resale_price": st.column_config.NumberColumn(
+            "Resale Price ($)", format="$ %d"
+        ),
+        "distance": st.column_config.NumberColumn("Distance (KM)", format="%.2f"),
+        "remaining_lease_year": st.column_config.NumberColumn(
+            "Remaining Lease (Years)", format="%d"
+        ),
+        "floor_area_sqm": st.column_config.NumberColumn(
+            "Floor Area (SQM)", format="%d"
+        ),
+        "month": st.column_config.DatetimeColumn("Month", format="MMM-YYYY"),
+    }
+    if address:
+        st.dataframe(
+            filtered_results[
+                [
+                    "month",
+                    "lease_commence_date",
+                    "remaining_lease_year",
+                    "flat_type",
+                    "storey_range",
+                    "floor_area_sqm",
+                    "price_per_sqm",
+                    "resale_price",
+                    "address",
+                    "distance",
+                ]
+            ].head(100),
+            hide_index=True,
+        )
+    else:
+        st.dataframe(
+            filtered_results[
+                [
+                    "month",
+                    "lease_commence_date",
+                    "remaining_lease_year",
+                    "flat_type",
+                    "storey_range",
+                    "floor_area_sqm",
+                    "price_per_sqm",
+                    "resale_price",
+                    "address",
+                ]
+            ].head(100),
+            hide_index=True,
+            column_config=col_config,
+        )
