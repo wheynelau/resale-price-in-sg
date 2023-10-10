@@ -2,7 +2,7 @@ import sys
 import time
 import pandas as pd
 import requests
-from utils.preprocessing import Preprocessor
+from src.utils.preprocessing import Preprocessor
 
 
 class HDBDataset:
@@ -93,7 +93,7 @@ if __name__ == "__main__":
 
     # 5. Merge the new data with the old data
     appended = preprocessor.add_new_to_old(old_df, new_data)
+    appended = preprocessor.get_nearest_amenities(appended)
 
     # 6. Save the merged data
-
     appended.to_csv(CSV_PATH)
