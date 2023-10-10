@@ -1,7 +1,7 @@
 name: Update CSV File
 
 on:
-  
+
   schedule:
     - cron: '0 0 * * 0'
   # You can also run this workflow manually from the Actions tab
@@ -19,7 +19,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11' 
+        python-version: '3.11'
 
     - name: Install dependencies
       run: |
@@ -41,8 +41,17 @@ jobs:
 
     - name: Commit and push changes for mrt
       run: |
-        git add -A 
+        git add -A
         git commit -m "actions: update MRT database file" || echo "no changes to commit"
+        git push
+
+    - name: Update rental dataset
+      run: python ./src/update_rental.py
+
+    - name: Commit and push changes for mrt
+      run: |
+        git add -A
+        git commit -m "actions: update rental dataset" || echo "no changes to commit"
         git push
 
     - name: Train model
