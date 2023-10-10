@@ -27,7 +27,7 @@ if address:
     results = st.session_state.data.query("distance <= 1").sort_index(ascending=False)
 
 else:
-    results = st.session_state.data.tail(100)
+    results = st.session_state.data
 
 if not results.empty:
     flat_type = st.selectbox(
