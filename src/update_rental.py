@@ -56,7 +56,7 @@ if __name__ == "__main__":
     dataset = RentalDataset()
     preprocessor = Preprocessor()
 
-    CSV_PATH = "assets/data/test_rental_flats.csv"
+    CSV_PATH = "assets/data/rental_flats.csv"
 
     # 1. Load the current data
     old_df = pd.read_csv(CSV_PATH, index_col=0)
@@ -85,5 +85,6 @@ if __name__ == "__main__":
     appended = preprocessor.add_new_to_old(old_df, new_data)
 
     # 6. Save the merged data
+    appended["flat_type"] = appended["flat_type"].str.replace("-", " ")
 
     appended.to_csv(CSV_PATH)
