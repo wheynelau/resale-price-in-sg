@@ -132,9 +132,7 @@ class Preprocessor:
         """
         predict = PredictProcessor()
         dist = predict(df)
-        return pd.concat(
-            [df, dist[[col for col in dist.columns if "dist" in col]]], axis=1
-        )
+        return pd.concat([df, dist.iloc[:-5]], axis=1)
 
     @staticmethod
     def set_dtypes(df):
@@ -149,7 +147,10 @@ class Preprocessor:
     def add_new_to_old(self, old_df: pd.DataFrame, new_df: pd.DataFrame):
         self.get_lat_lon(old_df, new_df)
         for col in old_df.columns:
-            new_df[col] = new_df[col].astype(old_df[col].dtype)
+            try:
+                new_df[col] = new_df[col].astype(old_df[col].dtype)
+            except KeyError:
+                pass
         appended_df = pd.concat([old_df, new_df], axis=0)
         return appended_df
 

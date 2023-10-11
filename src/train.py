@@ -44,14 +44,9 @@ class PredictProcessor:
         addresses = self.get_addresses(input_df)
         data_points = addresses[["latitude", "longitude"]].values
         indices_mrt, indices_malls = self.get_indices(data_points)
-        dist_mrt, dist_malls = self.get_distance(data_points)
-        dist_town = self.get_distance_to_town(addresses)
 
         addresses["mrt"] = indices_mrt
         addresses["malls"] = indices_malls
-        addresses["dist_mrt"] = dist_mrt
-        addresses["dist_malls"] = dist_malls
-        addresses["distance_to_town"] = dist_town
 
         input_df = input_df.merge(
             addresses, on=["address", "latitude", "longitude"], how="right"
