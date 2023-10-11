@@ -2,7 +2,7 @@ import sys
 import time
 import pandas as pd
 import requests
-from utils.preprocessing import Preprocessor
+from src.utils.preprocessing import Preprocessor
 
 
 class RentalDataset:
