@@ -9,6 +9,12 @@ st.set_page_config(
     layout="wide",
 )
 
+st.components.v1.html(
+    """
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7254865932186685"
+     crossorigin="anonymous"></script>
+    """
+)
 
 @st.cache_data
 def load_csv():
