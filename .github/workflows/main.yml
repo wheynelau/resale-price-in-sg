@@ -40,12 +40,14 @@ jobs:
 
     - name: Update mrts
       run: python ./src/update_mrts.py
+      continue-on-error: true
 
     - name: Commit and push changes for mrt
       run: |
         git add -A
         git commit -m "actions: update MRT database file" || echo "no changes to commit"
         git push
+      continue-on-error: true
 
     - name: Update rental dataset
       run: python ./src/update_rental.py
