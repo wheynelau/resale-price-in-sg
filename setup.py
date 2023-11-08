@@ -4,9 +4,9 @@ with open("workflow_requirements.txt", "r", encoding="utf-8") as f:
     requirements = f.read().splitlines()
 
 setup(
-    name="my_project",
+    name="resale-price",
     version="0.1",
     packages=find_packages(),
     install_requires=requirements,
-    package_dir={"": "./"},
+    package_dir={"": "."},
 )

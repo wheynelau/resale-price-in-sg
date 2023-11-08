@@ -75,9 +75,7 @@ if __name__ == "__main__":
     # 3. Convert the new data to a DataFrame
     print(f"New data fetched successfully, num differences = {len(sample)}")
     new_data = pd.DataFrame(sample)
-    new_data["_id"] = new_data["_id"] - 1
-    new_data.set_index("_id", inplace=True)
-
+    new_data.set_index("rent_approval_date", inplace=True)
     # 4. Preprocess the new data
     preprocessor.get_address(new_data)
 

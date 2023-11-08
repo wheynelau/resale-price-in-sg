@@ -92,8 +92,9 @@ class Preprocessor:
             features["lease_commence_date"], format="%Y"
         )
         features["current_lease_year"] = features["current_lease_dt"] / np.timedelta64(
-            1, "Y"
+            1, "D"
         )
+        features["current_lease_year"] = features["current_lease_year"] / 365.25
         features["remaining_lease_year"] = 99 - features["current_lease_year"]
         features["remaining_lease_year"] = features["remaining_lease_year"].round(2)
         features.drop(
@@ -132,7 +133,13 @@ class Preprocessor:
         """
         predict = PredictProcessor()
         dist = predict(df)
-        return pd.concat([df, dist.iloc[:-5]], axis=1)
+        # This is pretty bad
+        df[
+            ["mrt", "malls", "dist_malls", "dist_mrt", "distance_to_town", "flat_cat"]
+        ] = dist[
+            ["mrt", "malls", "dist_malls", "dist_mrt", "distance_to_town", "flat_cat"]
+        ]
+        return df
 
     @staticmethod
     def set_dtypes(df):

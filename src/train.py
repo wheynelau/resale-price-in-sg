@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class PredictProcessor:
-    RADIUS_KM = 5
+    RADIUS_KM = 2
     CONVERSION = 111.1
     METRIC = "manhattan"
 
@@ -42,14 +42,22 @@ class PredictProcessor:
         Process the dataframe
         """
         addresses = self.get_addresses(input_df)
+        input_df = input_df.drop(
+            columns=["dist_mrt", "dist_malls", "distance_to_town", "mrt", "malls"]
+        )
         data_points = addresses[["latitude", "longitude"]].values
         indices_mrt, indices_malls = self.get_indices(data_points)
+        dist_mrt, dist_malls = self.get_distance(data_points)
+        dist_town = self.get_distance_to_town(data_points)
 
         addresses["mrt"] = indices_mrt
         addresses["malls"] = indices_malls
+        addresses["dist_mrt"] = dist_mrt
+        addresses["dist_malls"] = dist_malls
+        addresses["distance_to_town"] = dist_town
 
         input_df = input_df.merge(
-            addresses, on=["address", "latitude", "longitude"], how="right"
+            addresses, on=["address", "latitude", "longitude"], how="left"
         )
 
         features = self.numerical_features(input_df)
@@ -91,7 +99,12 @@ class PredictProcessor:
         Get the distance to town
         """
         town = np.array([1.300556, 103.821667])
-        dist_town = np.linalg.norm(input_df[["latitude", "longitude"]] - town, axis=1)
+        if isinstance(input_df, pd.DataFrame):
+            dist_town = np.linalg.norm(
+                input_df[["latitude", "longitude"]] - town, axis=1
+            )
+        else:
+            dist_town = np.linalg.norm(input_df - town, axis=1)
         return dist_town * self.CONVERSION
 
     def numerical_features(self, input_df: pd.DataFrame) -> pd.DataFrame:
