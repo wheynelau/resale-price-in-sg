@@ -64,7 +64,7 @@ class Preprocessor:
     @staticmethod
     def getcoordinates(address):
         req = requests.get(
-            "https://developers.onemap.sg/commonapi/search?searchVal="
+            "https://www.onemap.gov.sg/api/common/elastic/search?searchVal="
             + address
             + "&returnGeom=Y&getAddrDetails=Y&pageNum=1",
             timeout=30,
