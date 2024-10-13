@@ -74,7 +74,7 @@ if __name__ == "__main__":
     # 2. Fetch the new data
 
     # 1000 is usually safe, it will usually not return more than 1000 records
-    sample = dataset.fetch_json_response(limit=2000, offset=len(old_df))
+    sample = dataset.fetch_json_response(limit=5000, offset=len(old_df))
 
     # 2a. Check if the new data is empty
 
